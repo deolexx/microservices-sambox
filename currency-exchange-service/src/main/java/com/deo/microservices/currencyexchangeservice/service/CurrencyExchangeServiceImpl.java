@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
@@ -19,6 +20,6 @@ public class CurrencyExchangeServiceImpl implements CurrencyExchangeService {
 
     @Override
     public CurrencyExchange findByFromAndTo(String from, String to) {
-        return currencyExchangeRepository.findByFromAndTo(from,to);
+        return currencyExchangeRepository.findByFromAndTo(from, to);
     }
 }
