@@ -1,3 +1,5 @@
+server:
+  port: 8000
 spring:
   application:
     name: currency-exchange
@@ -8,7 +10,6 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-
     change-log: classpath:/db/migrations/db.changelog-master.yaml
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -22,11 +23,10 @@ spring:
       #liqubase will handle all migrations
       ddl-auto: none
     defer-datasource-initialization: false
-  h2:
-    console:
-      enabled: true
-server:
-  port: 8000
 logging:
   level:
-    "liquibase" : info
+    "liquibase": info
+eureka:
+  client:
+    service-url:
+      defatul-zone: http://localhost:8761/eureka

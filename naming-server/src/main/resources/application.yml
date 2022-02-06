@@ -1,13 +1,13 @@
 server:
-  port: 8100
+  port: 8761
 spring:
   application:
-    name: currency-conversion
+    name: naming-server
   config:
     import: optional:configserver:http://localhost:8888
 eureka:
   client:
-    service-url:
-      defatul-zone: http://localhost:8761/eureka
+    register-with-eureka: false
+    fetch-registry: false
   instance:
     prefer-ip-address: false
