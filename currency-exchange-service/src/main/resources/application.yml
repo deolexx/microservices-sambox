@@ -8,12 +8,13 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-    change-log: classpath:db/migrations/db.changelog-master.yaml
+
+    change-log: classpath:/db/migrations/db.changelog-master.yaml
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: testuser
-    password: password
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5438/currency_db
+    username: user1
+    password: user1
   jpa:
     show-sql: true
     open-in-view: false
@@ -27,4 +28,5 @@ spring:
 server:
   port: 8000
 logging:
-  level: debug
+  level:
+    "liquibase" : info

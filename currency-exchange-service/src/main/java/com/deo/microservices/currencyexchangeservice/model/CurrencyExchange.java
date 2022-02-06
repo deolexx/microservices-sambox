@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @Data
+@Entity
 public class CurrencyExchange {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
