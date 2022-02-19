@@ -10,6 +10,4 @@ public interface CurrencyService {
 
     Currency findBy(String id);
 
-    List<Currency> findAll();
-
 }

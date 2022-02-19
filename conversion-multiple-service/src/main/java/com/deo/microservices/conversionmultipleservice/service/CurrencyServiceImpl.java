@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
+
     @Autowired
     private final CurrencyRepository currencyRepository;
 
@@ -21,12 +22,9 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Currency findBy(String id) {
-        return currencyRepository.findById(id).get();
+        return currencyRepository.findById(id);
     }
 
-    @Override
-    public List<Currency> findAll() {
-        return null;
-    }
+
 }
 
