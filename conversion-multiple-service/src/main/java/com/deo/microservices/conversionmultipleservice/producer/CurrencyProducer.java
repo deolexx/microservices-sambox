@@ -5,7 +5,6 @@ import com.deo.microservices.conversionmultipleservice.service.CurrencyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,13 +20,12 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 public class CurrencyProducer {
 
-    @Value(value = "${kafka.topic.name}")
-    private String topicName;
+    private String topicName = "currencyInfo";
     @Autowired
     private CurrencyService currencyService;
 
     @Autowired
-    private KafkaTemplate<String, List<Currency>> kafkaTemplate;
+    private final KafkaTemplate<String, List<Currency>> kafkaTemplate;
 
     @Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
     public void sendMessage() {
