@@ -37,13 +37,13 @@ public class CurrencyProducer {
 
             @Override
             public void onSuccess(SendResult<String, List<Currency>> result) {
-                System.out.println("Sent message=[" + currencies.toString() +
+                log.warn("Sent message=[" + currencies.toString() +
                         "] with offset=[" + result.getRecordMetadata().offset() + "]");
             }
 
             @Override
             public void onFailure(Throwable ex) {
-                System.out.println("Unable to send message=["
+                log.warn("Unable to send message=["
                         + currencies.toString() + "] due to : " + ex.getMessage());
             }
         });
