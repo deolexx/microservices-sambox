@@ -1,0 +1,10 @@
+server:
+  port: 8400
+spring:
+  application:
+    name: freecurrencyapi-facade
+  config:
+    import: optional:configserver:http://localhost:8888
+application:
+  apikey: d0f2fed0-9259-11ec-b8ef-4d9d265869bc
+  url: https://freecurrencyapi.net/api/v2/latest
