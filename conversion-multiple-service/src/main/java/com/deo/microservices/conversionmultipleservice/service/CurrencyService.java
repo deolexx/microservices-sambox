@@ -8,6 +8,8 @@ public interface CurrencyService {
 
     void save(Currency currency);
 
-    Currency findBy(String id);
+    Currency findById(String id);
+
+    List<Currency> findAll();
 
 }

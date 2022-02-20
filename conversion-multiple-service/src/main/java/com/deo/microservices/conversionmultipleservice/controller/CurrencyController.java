@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController()
 @RequiredArgsConstructor
 public class CurrencyController {
@@ -19,10 +21,15 @@ public class CurrencyController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/currency")
-    public ResponseEntity<Currency> findAll(@RequestParam String id) {
+    @GetMapping("/currency/{id}")
+    public ResponseEntity<Currency> findById(@PathVariable String id) {
 
-        return new ResponseEntity<>(currencyService.findBy(id), HttpStatus.OK);
+        return new ResponseEntity<>(currencyService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/currency")
+    public ResponseEntity<List<Currency>> findAll() {
+        return new ResponseEntity<>(currencyService.findAll(), HttpStatus.OK);
     }
 
 }
