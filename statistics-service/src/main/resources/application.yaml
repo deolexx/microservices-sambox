@@ -1,1 +1,14 @@
-
+server:
+  port: 8300
+spring:
+  application:
+    name: statistics-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  data:
+    mongodb:
+      username: mongo
+      password: mongo
+      host: localhost
+      port: 27017
+      database: statistics_db
