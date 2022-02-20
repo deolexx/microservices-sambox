@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
@@ -22,9 +20,8 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public Currency findBy(String id) {
-        return currencyRepository.findById(id);
+        return currencyRepository.findById(id).get();
     }
-
 
 }
 

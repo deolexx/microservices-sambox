@@ -7,21 +7,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController("/currency")
+@RestController()
 @RequiredArgsConstructor
 public class CurrencyController {
 
     private final CurrencyService currencyService;
 
-    @PostMapping
+    @PostMapping("/currency")
     public ResponseEntity<Void> createCurrency(@RequestBody Currency currency) {
         currencyService.save(currency);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/currency")
     public ResponseEntity<Currency> findAll(@RequestParam String id) {
 
         return new ResponseEntity<>(currencyService.findBy(id), HttpStatus.OK);

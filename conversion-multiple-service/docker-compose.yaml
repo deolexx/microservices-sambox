@@ -5,10 +5,11 @@ services:
     image:  redis:6.2-alpine
     ports:
       - "6379:6379"
-    command: redis-server --requirepass redis
+    command: redis-server --requirepass redis --save 60 1 --loglevel warning
     environment:
       - REDIS_REPLICATION_MODE=master
     restart: always
     volumes:
       - ./logs:/log
+      - ./redis_data:/data
       - ./conf:/conf
