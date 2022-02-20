@@ -19,14 +19,13 @@ public class CurrencyValuesLoaderImpl implements CurrencyValuesLoader {
     private String url;
 
     @Override
-    public void getBaseRates() {
+    public String getBaseRates() {
         try {
             URL urlForGetRequest = new URL(url);
             String readLine = null;
             HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
             conection.setRequestMethod("GET");
             int responseCode = conection.getResponseCode();
-
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(conection.getInputStream()));
                 StringBuffer response = new StringBuffer();
@@ -35,16 +34,18 @@ public class CurrencyValuesLoaderImpl implements CurrencyValuesLoader {
                 }
                 in.close();
                 System.out.println(response.toString());
+                return response.toString();
             } else {
                 throw new Exception("Error in API Call");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public void getSpecificRates(String code) {
+    public String getSpecificRates(String code) {
         String currencyCode = StringUtils.isEmpty(code) ? "USD" : code;
         try {
             URL urlForGetRequest = new URL(url + "?apikey=" + apikey + "&base_currency=" + currencyCode);
@@ -60,12 +61,14 @@ public class CurrencyValuesLoaderImpl implements CurrencyValuesLoader {
                     response.append(readLine);
                 }
                 in.close();
-                System.out.println(response.toString());
+                return response.toString();
             } else {
                 throw new Exception("Error in API Call");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return null;
     }
+
 }
