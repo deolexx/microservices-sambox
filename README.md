@@ -10,3 +10,6 @@ ports:
     spring-cloud-config-server: 8888 
         https://github.com/deolexx/microservices-remote-config.git
 
+
+Kafka UI
+http://localhost:8088/ui

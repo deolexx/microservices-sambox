@@ -9,7 +9,13 @@ spring:
     host: localhost
     password: redis
     port: 6379
-
+  kafka:
+    bootstrap-servers: localhost:9092
+    template:
+      default-topic: currencyInfo
+#    consumer:
+#      group-id: OfficeGroupId
+#      auto-offset-reset: latest
 eureka:
   client:
     service-url:

@@ -23,6 +23,13 @@ spring:
       #liqubase will handle all migrations
       ddl-auto: none
     defer-datasource-initialization: false
+  kafka:
+    bootstrap-servers: localhost:9092
+#    template:
+#      default-topic: currencyInfo
+    consumer:
+      group-id: currencyExchangeId
+      auto-offset-reset: earliest
 logging:
   level:
     "liquibase": info
