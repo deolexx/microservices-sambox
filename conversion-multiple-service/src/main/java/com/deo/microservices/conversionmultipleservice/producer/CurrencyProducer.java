@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 public class CurrencyProducer {
 
-    private String topicName = "currencyInfo";
+    private String topicName = "currencyInfo1";
     @Autowired
     private CurrencyService currencyService;
 
@@ -32,7 +32,6 @@ public class CurrencyProducer {
         List<Currency> currencies = currencyService.findAll();
         ListenableFuture<SendResult<String, List<Currency>>> future =
                 kafkaTemplate.send(topicName, currencies);
-
         future.addCallback(new ListenableFutureCallback<SendResult<String, List<Currency>>>() {
 
             @Override

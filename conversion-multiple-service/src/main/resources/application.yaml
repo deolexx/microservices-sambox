@@ -17,7 +17,7 @@ spring:
       acks: -1
       client-id: conversion-multiple-service
     template:
-      default-topic: currencyInfo
+      default-topic: currencyInfo1
 
 eureka:
   client:
