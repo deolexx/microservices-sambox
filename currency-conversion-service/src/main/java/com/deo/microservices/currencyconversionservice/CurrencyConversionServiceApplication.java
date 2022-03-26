@@ -1,4 +1,4 @@
-package com.deo.mictoservices.currencyconversionservice;
+package com.deo.microservices.currencyconversionservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

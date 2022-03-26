@@ -1,7 +1,7 @@
-package com.deo.mictoservices.currencyconversionservice.controller;
+package com.deo.microservices.currencyconversionservice.controller;
 
-import com.deo.mictoservices.currencyconversionservice.model.CurrencyConversion;
-import com.deo.mictoservices.currencyconversionservice.proxy.CurrencyExchangeProxy;
+import com.deo.microservices.currencyconversionservice.model.CurrencyConversion;
+import com.deo.microservices.currencyconversionservice.proxy.CurrencyExchangeProxy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

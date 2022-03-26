@@ -1,6 +1,6 @@
-package com.deo.mictoservices.currencyconversionservice.proxy;
+package com.deo.microservices.currencyconversionservice.proxy;
 
-import com.deo.mictoservices.currencyconversionservice.model.CurrencyConversion;
+import com.deo.microservices.currencyconversionservice.model.CurrencyConversion;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package com.deo.mictoservices.currencyconversionservice.model;
+package com.deo.microservices.currencyconversionservice.model;
 
 import lombok.*;
 

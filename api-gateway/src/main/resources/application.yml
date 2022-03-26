@@ -1,6 +1,27 @@
 server:
   port: 8765
 spring:
+  cloud:
+    gateway:
+      routes:
+        - id: get
+          uri: http://httpbin.org:80
+          predicates:
+            - Path=/get/**
+          filters:
+            - RewritePath=/get/(?<path>.*), /$\{path}
+            - AddRequestHeader=Hello, World
+        #            - name: RequestRateLimiter
+        #              args:
+        #                redis-rate-limiter.replenishRate: 1
+        #                redis-rate-limiter.burstCapacity: 60
+        #                redis-rate-limiter.requestedTokens: 15
+        - id: rewritepath_route
+          uri: https://example.org
+          predicates:
+            - Path=/red/**
+          filters:
+            - RewritePath=/red(?<segment>/?.*), $\{segment}
   application:
     name: api-gateway
   config:
