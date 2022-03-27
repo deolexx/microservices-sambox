@@ -13,6 +13,7 @@ public class WevMvcConfig implements WebMvcConfigurer {
     @Value("${gateway.uri}")
     String origin;
 
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("GET")

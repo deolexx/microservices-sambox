@@ -18,14 +18,14 @@ public class ExchangeController {
     private final CurrencyExchangeService currencyExchangeService;
 
 
-    @GetMapping("/currency-exchange/from/{from}/to/{to}")
+    @GetMapping("/from/{from}/to/{to}")
     public CurrencyExchange retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
         CurrencyExchange currencyExchange = currencyExchangeService.findByFromAndTo(from, to);
         currencyExchange.setEnvironment(environment.getProperty("local.server.port"));
         return currencyExchange;
     }
 
-    @GetMapping("/currency-exchange/hello")
+    @GetMapping("/hello")
     public String getHello() {
         return "Hello from exchange";
     }
