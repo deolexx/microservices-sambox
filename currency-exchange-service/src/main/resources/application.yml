@@ -25,8 +25,8 @@ spring:
     defer-datasource-initialization: false
   kafka:
     bootstrap-servers: localhost:9092
-#    template:
-#      default-topic: currencyInfo
+    #    template:
+    #      default-topic: currencyInfo
     consumer:
       group-id: currencyExchangeId
       auto-offset-reset: earliest
@@ -37,3 +37,5 @@ eureka:
   client:
     service-url:
       defatul-zone: http://localhost:8761/eureka
+gateway:
+  uri: "http://localhost:8765"
