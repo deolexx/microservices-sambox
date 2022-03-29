@@ -1,7 +1,9 @@
 # microservices-sandbox
+sandbox with different technologies used:
+
+
 
 #### user docker compose files in next modules:
-
 - statistics to up mongodb
 - currency exchange to up postgres
 - conversion multiple to up redis and kafka

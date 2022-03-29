@@ -32,6 +32,12 @@ spring:
             - Path=/sms/**
           filters:
             - RewritePath=/sms/(?<path>.*), /$\{path}
+        - id: statistics-service
+          uri: lb://statistics-service
+          predicates:
+            - Path=/statistics/**
+          filters:
+            - RewritePath=/statistics/(?<path>.*), /$\{path}
   #      routes:
   #        - id: get
   #          uri: http://httpbin.org:80
