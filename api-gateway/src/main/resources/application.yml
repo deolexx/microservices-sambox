@@ -26,6 +26,12 @@ spring:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
+        - id: sms-service
+          uri: lb://sms-service
+          predicates:
+            - Path=/sms/**
+          filters:
+            - RewritePath=/sms/(?<path>.*), /$\{path}
   #      routes:
   #        - id: get
   #          uri: http://httpbin.org:80
