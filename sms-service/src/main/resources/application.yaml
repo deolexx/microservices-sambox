@@ -4,4 +4,7 @@ server:
 spring:
   application:
     name: sms-service
-
+twilio:
+  account_sid: "ACc30162321d7bd371d1b1cac61de75132"
+  auth_token: "ab3c7d9f85a844e71eb49d00e1ae13e5"
+  phone_number: "+17573474118"
