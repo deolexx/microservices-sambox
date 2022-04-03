@@ -76,8 +76,10 @@ public class InvoicePdfGenerator {
         try {
             Image logo = new Image(ImageDataFactory.create("./pdf-export-service/src/main/resources/images/logo1.png"));
             Paragraph title = new Paragraph("Truckup").setFont(futuraBold).setFontSize(14).add(logo.setHeight(20).setWidth(15));
-            title.setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.01f, 0.5f));
+            Paragraph spacing = new Paragraph().add(new Text(""));
+            spacing.setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.01f, 0.5f));
             document.add(title);
+            document.add(spacing);
         } catch (IOException e) {
             log.error("Error filling PDF title");
         }
@@ -113,7 +115,13 @@ public class InvoicePdfGenerator {
                 .startNewRow()
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Fuel"))))
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("$25.00")
-                        .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth();
+                        .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth()
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)));
 
         tablePrice.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
 
@@ -136,7 +144,13 @@ public class InvoicePdfGenerator {
                 .addCell((new Cell(1, 2).addStyle(noBorder).setVerticalAlignment(VerticalAlignment.BOTTOM).setFont(roboto).setFontSize(20).add(new Paragraph("Kaylinn Westervelt"))))
                 .addCell((new Cell().addStyle(noBorder).setVerticalAlignment(VerticalAlignment.BOTTOM).setFont(roboto).setFontSize(13).add(new Paragraph("February 25, 2022"))))
                 .addCell((new Cell().addStyle(noBorder).setVerticalAlignment(VerticalAlignment.BOTTOM).setFont(robotoBold).setFontSize(13).add(new Paragraph("000287"))))
-                .useAllAvailableWidth();
+                .useAllAvailableWidth()
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)));
 
         tableProvider.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
         document.add(tableProvider);
@@ -188,16 +202,13 @@ public class InvoicePdfGenerator {
                         .setFontColor(grayText))))
                 .startNewRow()
                 .addCell((new Cell(1, 4).addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Some default comment with a lot of words about how the work is done"))))
-                .useAllAvailableWidth()
-                        .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
-                        .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("")
-                        .setFontColor(grayText))));
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)));
         tableJobDetails.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
-
         document.add(tableJobDetails);
     }
 
@@ -236,7 +247,13 @@ public class InvoicePdfGenerator {
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("1 @ $300 000.00")
                         .setFontColor(grayText).setTextAlignment(TextAlignment.RIGHT))))
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("$300 000.00")
-                        .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth();
+                        .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth()
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder)));
 
         tableLaborAndService.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
 
