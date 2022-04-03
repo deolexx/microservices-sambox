@@ -13,12 +13,10 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.Style;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -35,16 +33,19 @@ public class InvoicePdfGenerator {
     private Style noBorder;
     private Color greenText;
     private Color grayText;
-    private PdfFont futura;
     private PdfFont futuraBold;
+    private PdfFont roboto;
+    private PdfFont robotoBold;
 
     private void createFontsAndColors() {
         try {
+//            noBorder = new Style().setBorder(new SolidBorder(new DeviceRgb(116, 123, 131), 0.01f, 0.5f));
             noBorder = new Style().setBorder(Border.NO_BORDER);
             greenText = new DeviceRgb(0, 204, 102);
             grayText = new DeviceRgb(116, 123, 131);
-            futura = PdfFontFactory.createFont("./pdf-export-service/src/main/resources/fonts/Futura Round Medium.ttf");
             futuraBold = PdfFontFactory.createFont("./pdf-export-service/src/main/resources/fonts/Futura Round Bold.ttf");
+            roboto = PdfFontFactory.createFont("./pdf-export-service/src/main/resources/fonts/Roboto Medium.ttf");
+            robotoBold = PdfFontFactory.createFont("./pdf-export-service/src/main/resources/fonts/Roboto Bold.ttf");
         } catch (IOException e) {
             log.error("Error filling PDF title");
         }
@@ -86,32 +87,32 @@ public class InvoicePdfGenerator {
     private void fillPrice(Document document, Invoice invoice) {
         Table tablePrice = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tablePrice
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("PRICE")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PRICE")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("Price summary")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PRICE SUMMARY")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Total amount due")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Total amount due")
                         .setFontColor(grayText)
                         .setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Labor"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$20.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Labor"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("$20.00")
                         .setTextAlignment(TextAlignment.RIGHT))))
                 .startNewRow()
-                .addCell((new Cell(3, 2).addStyle(noBorder).setFont(futuraBold).setFontSize(36).add(new Paragraph(invoice.totalPrice))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Parts"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$300 000.00")
+                .addCell((new Cell(3, 2).addStyle(noBorder).setFont(roboto).setFontSize(36).add(new Paragraph(invoice.totalPrice))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Parts"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("$300 000.00")
                         .setTextAlignment(TextAlignment.RIGHT))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Call-out(travel)"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$10.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Call-out(travel)"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("$10.00")
                         .setTextAlignment(TextAlignment.RIGHT))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Fuel"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$25.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Fuel"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("$25.00")
                         .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth();
 
         tablePrice.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
@@ -124,18 +125,17 @@ public class InvoicePdfGenerator {
 
         Table tableProvider = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableProvider
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("Provider")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PROVIDER")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Booked on")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Booked on")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Job number")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Job number")
                         .setFontColor(grayText).setFontSize(9))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("MAXIM"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("February 25, 2022"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph("000287"))))
+                .addCell((new Cell(1, 2).addStyle(noBorder).setVerticalAlignment(VerticalAlignment.BOTTOM).setFont(roboto).setFontSize(20).add(new Paragraph("Kaylinn Westervelt"))))
+                .addCell((new Cell().addStyle(noBorder).setVerticalAlignment(VerticalAlignment.BOTTOM).setFont(roboto).setFontSize(13).add(new Paragraph("February 25, 2022"))))
+                .addCell((new Cell().addStyle(noBorder).setVerticalAlignment(VerticalAlignment.BOTTOM).setFont(robotoBold).setFontSize(13).add(new Paragraph("000287"))))
                 .useAllAvailableWidth();
 
         tableProvider.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
@@ -146,52 +146,56 @@ public class InvoicePdfGenerator {
 
         Table tableJobDetails = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableJobDetails
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("JOB DETAILS")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("JOB DETAILS")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Company")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Company")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Dispatcher")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Dispatcher")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Driver")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Driver")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Reference number")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Reference number")
                         .setFontColor(grayText).setFontSize(9))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("MaxCorp"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("John Deer"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Maxim Golikov"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("+7 918 777 77 77"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("MaxCorp"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("John Deer"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Maxim Golikov"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("+7 918 777 77 77"))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Vehicle")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("VIN / Serial number")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("VIN / Serial number")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Unit number")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Unit number")
                         .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Vehicle type")
-                        .setFontColor(grayText).setFontSize(9))))
-                .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Mazzeratti"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("777777"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("777777"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Super Car"))))
-                .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Vehicle location")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle type")
                         .setFontColor(grayText).setFontSize(9))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10)
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Mazzeratti"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("777777"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("777777"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Super Car"))))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle location")
+                        .setFontColor(grayText).setFontSize(9))))
+                .startNewRow()
+                .addCell((new Cell(1, 4).addStyle(noBorder).setFont(robotoBold).setFontSize(12)
                         .add(new Paragraph("Winner's Prospect 7a, Minsk, Belarus"))))
+                .useAllAvailableWidth()
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Customer notes")
-                        .setFontColor(grayText).setFontSize(9))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Customer notes")
+                        .setFontColor(grayText))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("3456789"))))
-                .useAllAvailableWidth();
-
+                .addCell((new Cell(1, 4).addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Some default comment with a lot of words about how the work is done"))))
+                .useAllAvailableWidth()
+                        .startNewRow()
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                        .startNewRow()
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .startNewRow()
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("")
+                        .setFontColor(grayText))));
         tableJobDetails.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
 
         document.add(tableJobDetails);
@@ -200,38 +204,38 @@ public class InvoicePdfGenerator {
     private void fillLaborAndService(Document document, Invoice invoice) {
         Table tableLaborAndService = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableLaborAndService
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("LABOR")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("LABOR")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9)
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9)
                         .add(new Paragraph("Tire repair / replacement"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("2 @ $10.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("2 @ $10.00")
                         .setFontColor(grayText).setTextAlignment(TextAlignment.RIGHT))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$20.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("$20.00")
                         .setTextAlignment(TextAlignment.RIGHT))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9)
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9)
                         .add(new Paragraph("Hourly - 2 hour minimum")
                                 .setFontColor(grayText).setFontSize(10))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("PARTS")
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PARTS")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Engine"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("1 @ $300 000.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Engine"))))
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("1 @ $300 000.00")
                         .setFontColor(grayText).setTextAlignment(TextAlignment.RIGHT))))
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$300 000.00")
+                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("$300 000.00")
                         .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth();
 
         tableLaborAndService.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
@@ -242,10 +246,10 @@ public class InvoicePdfGenerator {
     private void fillComments(Document document, Invoice invoice) {
         Table tableComments = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableComments
-                .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("Comments").
+                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("COMMENTS").
                         setFontColor(greenText))));
         invoice.getComments().forEach(
-                s -> tableComments.startNewRow().addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(s))))
+                s -> tableComments.startNewRow().addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(s))))
                         .useAllAvailableWidth());
         document.add(tableComments);
     }
