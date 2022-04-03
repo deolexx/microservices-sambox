@@ -85,8 +85,7 @@ public class InvoicePdfGenerator {
                     .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$20.00")
                             .setTextAlignment(TextAlignment.RIGHT))))
                     .startNewRow()
-                    .addCell((new Cell(3,2).addStyle(noBorder).setFont(futuraBold).setFontSize(20).add(new Paragraph("$300 055.00"))))
-                    .setTextAlignment(TextAlignment.CENTER)
+                    .addCell((new Cell(3, 2).addStyle(noBorder).setFont(futuraBold).setFontSize(36).add(new Paragraph("$300 055.00"))))
 //                    .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(9).add(new Paragraph(""))))
                     .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Parts"))))
                     .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$300 000.00")
@@ -220,7 +219,7 @@ public class InvoicePdfGenerator {
                     .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("shit"))))
                     .useAllAvailableWidth()
                     .startNewRow()
-                            .addCell(new Cell().addStyle(noBorder).setFont(futura).setFontSize(15).add(new Paragraph("hello darkness my old friend")))
+                    .addCell(new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("hello darkness my old friend")))
                     .useAllAvailableWidth();
 
             document
