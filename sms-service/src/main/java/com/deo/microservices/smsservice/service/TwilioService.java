@@ -1,44 +1,41 @@
 package com.deo.microservices.smsservice.service;
 
 import com.deo.microservices.smsservice.config.TwilioConfig;
-import com.deo.microservices.smsservice.model.MessageInput;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
 
 @Service
 @RequiredArgsConstructor
-public class TwilioSimpleSmsService {
+@Log4j2
+public class TwilioService {
 
     private final TwilioConfig config;
 
-    public String send(MessageInput input) {
+    public void sendSms(String messageText, String messageNumber) {
         Twilio.init(config.getAccountSid(), config.getAuthToken());
-
         Message message = Message.creator(
-                        new PhoneNumber(input.getNumber().isEmpty() ? "+380967986875" : input.getNumber()),
+                        new PhoneNumber(messageNumber),
                         new PhoneNumber(config.getPhoneNumber()),
-                        input.getMessage()
-
+                        messageText
                 )
                 .create();
-
-        return message.getStatus().toString();
+        log.info(message.getStatus());
     }
 
-    public String call(String name) {
+    public void prerecordedCall(String fileURI, String callNumber) {
         Twilio.init(config.getAccountSid(), config.getAuthToken());
         Call call = Call.creator(
-                        new PhoneNumber("+380967986875"),
+                        new PhoneNumber(callNumber),
                         new PhoneNumber(config.getPhoneNumber()),
-                        URI.create(name.equals("two")?"https://microservices-sandbox-2316.twil.io/testtwo.mp3":"https://microservices-sandbox-2316.twil.io/testone.mp3"))
+                        URI.create(fileURI))
                 .create();
-
-        return call.getSid();
+        log.info(call.getStatus());
     }
 }

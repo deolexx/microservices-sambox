@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @OpenAPIDefinition(
         info = @Info(
-                title = "SMS Service API" ,version = "1.0",
+                title = "SMS Service API", version = "1.0",
                 description = "Sms notification service integrated with twillio"
         )
 )

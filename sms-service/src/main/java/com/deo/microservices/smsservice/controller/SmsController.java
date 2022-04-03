@@ -1,11 +1,10 @@
 package com.deo.microservices.smsservice.controller;
 
-import com.deo.microservices.smsservice.model.MessageInput;
-import com.deo.microservices.smsservice.service.TwilioSimpleSmsService;
+import com.deo.microservices.smsservice.service.SpringScheduler;
+import com.deo.microservices.smsservice.service.TwilioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -14,16 +13,12 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class SmsController {
 
-    private final TwilioSimpleSmsService smsService;
+    private final TwilioService twilioService;
+    private final SpringScheduler scheduler;
 
     @PostMapping("/sms")
-    public Mono<String> send(@Validated @RequestBody MessageInput input) {
-
-        return Mono.just(smsService.send(input));
-    }
-
-    @PostMapping("/call")
-    public Mono<String> call(@RequestParam("name") String name) {
-        return Mono.just(smsService.call(name));
+    public Mono<String> send(@Validated @RequestParam String text, @Validated @RequestParam String number) {
+        twilioService.sendSms(text, number);
+        return Mono.just("queued");
     }
 }
