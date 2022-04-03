@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -37,7 +38,7 @@ public class InvoicePdfGenerator {
     private PdfFont futura;
     private PdfFont futuraBold;
 
-    private void createAll() {
+    private void createFontsAndColors() {
         try {
             noBorder = new Style().setBorder(Border.NO_BORDER);
             greenText = new DeviceRgb(0, 204, 102);
@@ -50,19 +51,19 @@ public class InvoicePdfGenerator {
     }
 
     @SneakyThrows
-    public ByteArrayOutputStream generatePdf() {
+    public ByteArrayOutputStream generatePdf(Invoice invoice) {
         ByteArrayOutputStream fileOutputStream = new ByteArrayOutputStream();
         PdfWriter pdfWriter = new PdfWriter(fileOutputStream);
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
         pdfDocument.setDefaultPageSize(PageSize.A4);
-        createAll();
+        createFontsAndColors();
         fillTitle(document);
-        fillPrice(document);
-        fillProvider(document);
-        fillJobDetails(document);
-        fillLaborAndService(document);
-        fillComments(document);
+        fillPrice(document, invoice);
+        fillProvider(document, invoice);
+        fillJobDetails(document, invoice);
+        fillLaborAndService(document, invoice);
+        fillComments(document, invoice);
 
         document.flush();
         document.close();
@@ -73,7 +74,6 @@ public class InvoicePdfGenerator {
     private void fillTitle(Document document) {
         try {
             Image logo = new Image(ImageDataFactory.create("./pdf-export-service/src/main/resources/images/logo1.png"));
-            PdfFont futuraBold = PdfFontFactory.createFont("./pdf-export-service/src/main/resources/fonts/Futura Round Bold.ttf");
             Paragraph title = new Paragraph("Truckup").setFont(futuraBold).setFontSize(14).add(logo.setHeight(20).setWidth(15));
             title.setBorderBottom(new SolidBorder(ColorConstants.LIGHT_GRAY, 0.01f, 0.5f));
             document.add(title);
@@ -83,7 +83,7 @@ public class InvoicePdfGenerator {
     }
 
     //TODO Дописать когда будут входные данные, продумать создание таблицы через циклы
-    private void fillPrice(Document document) {
+    private void fillPrice(Document document, Invoice invoice) {
         Table tablePrice = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tablePrice
                 .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("PRICE")
@@ -101,7 +101,7 @@ public class InvoicePdfGenerator {
                 .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$20.00")
                         .setTextAlignment(TextAlignment.RIGHT))))
                 .startNewRow()
-                .addCell((new Cell(3, 2).addStyle(noBorder).setFont(futuraBold).setFontSize(36).add(new Paragraph("$300 055.00"))))
+                .addCell((new Cell(3, 2).addStyle(noBorder).setFont(futuraBold).setFontSize(36).add(new Paragraph(invoice.totalPrice))))
                 .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("Parts"))))
                 .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("$300 000.00")
                         .setTextAlignment(TextAlignment.RIGHT))))
@@ -120,7 +120,7 @@ public class InvoicePdfGenerator {
                 .add(tablePrice);
     }
 
-    private void fillProvider(Document document) {
+    private void fillProvider(Document document, Invoice invoice) {
 
         Table tableProvider = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableProvider
@@ -142,7 +142,7 @@ public class InvoicePdfGenerator {
         document.add(tableProvider);
     }
 
-    private void fillJobDetails(Document document) {
+    private void fillJobDetails(Document document, Invoice invoice) {
 
         Table tableJobDetails = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableJobDetails
@@ -197,7 +197,7 @@ public class InvoicePdfGenerator {
         document.add(tableJobDetails);
     }
 
-    private void fillLaborAndService(Document document) {
+    private void fillLaborAndService(Document document, Invoice invoice) {
         Table tableLaborAndService = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableLaborAndService
                 .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("LABOR")
@@ -239,17 +239,14 @@ public class InvoicePdfGenerator {
         document.add(tableLaborAndService);
     }
 
-    private void fillComments(Document document) {
+    private void fillComments(Document document, Invoice invoice) {
         Table tableComments = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableComments
                 .addCell((new Cell().addStyle(noBorder).setFont(futuraBold).setFontSize(10).add(new Paragraph("Comments").
-                        setFontColor(greenText))))
-                .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("shit"))))
-                .useAllAvailableWidth()
-                .startNewRow()
-                .addCell(new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph("hello darkness my old friend")))
-                .useAllAvailableWidth();
+                        setFontColor(greenText))));
+        invoice.getComments().forEach(
+                s -> tableComments.startNewRow().addCell((new Cell().addStyle(noBorder).setFont(futura).setFontSize(9).add(new Paragraph(s))))
+                        .useAllAvailableWidth());
         document.add(tableComments);
     }
 

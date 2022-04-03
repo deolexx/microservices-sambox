@@ -1,5 +1,6 @@
 package com.deo.microservices.pdfexportservice.controller;
 
+import com.deo.microservices.pdfexportservice.service.Invoice;
 import com.deo.microservices.pdfexportservice.service.InvoicePdfGenerator;
 import com.itextpdf.kernel.exceptions.PdfException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class PdfController {
     @GetMapping("/pdf")
     public void downloadInvoicePdf(HttpServletRequest request, HttpServletResponse response) {
 
-        try (OutputStream os = response.getOutputStream(); ByteArrayOutputStream baos = invoicePdfGenerator.generatePdf()) {
+        try (OutputStream os = response.getOutputStream(); ByteArrayOutputStream baos = invoicePdfGenerator.generatePdf(new Invoice())) {
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control",
                     "must-revalidate, post-check=0, pre-check=0");
