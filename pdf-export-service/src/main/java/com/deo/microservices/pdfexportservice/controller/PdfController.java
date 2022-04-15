@@ -20,10 +20,11 @@ import java.io.OutputStream;
 public class PdfController {
 
     private final InvoicePdfGenerator invoicePdfGenerator;
+    @GetMapping("/createpdf")
 
-    @GetMapping("/pdf")
     public void downloadInvoicePdf(HttpServletRequest request, HttpServletResponse response) {
-
+        String id = request.getParameter("id");
+        log.error(id);
         try (OutputStream os = response.getOutputStream(); ByteArrayOutputStream baos = invoicePdfGenerator.generatePdf(new Invoice())) {
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control",

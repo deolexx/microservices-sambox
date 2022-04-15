@@ -7,18 +7,42 @@ spring:
         locator:
           enabled: true
       routes:
+#        PDF SERVICE
         - id: pdf-service
           uri: lb://pdf-service
           predicates:
             - Path=/pdf/**
           filters:
             - RewritePath=/pdf/(?<path>.*), /$\{path}
+#       CURRENCY EXCHANGE SERVICE
         - id: currency-exchange-service
           uri: lb://currency-exchange
           predicates:
             - Path=/currency-exchange/**
           filters:
             - RewritePath=/currency-exchange/(?<path>.*), /$\{path}
+#        SMS SERVICE
+        - id: sms-service
+          uri: lb://sms-service
+          predicates:
+            - Path=/sms/**
+          filters:
+            - RewritePath=/sms/(?<path>.*), /$\{path}
+#        STRIPE INTEGRATION
+        - id: stripe-integration-service
+          uri: lb://stripe-integration-service
+          predicates:
+            - Path=/stripe-integration/**
+          filters:
+            - RewritePath=/stripe-integration/(?<path>.*), /$\{path}
+#         STATISTICS
+        - id: statistics-service
+          uri: lb://statistics-service
+          predicates:
+            - Path=/statistics/**
+          filters:
+            - RewritePath=/statistics/(?<path>.*), /$\{path}
+##############################################################################
         # Open api endpoint
         - id: openapi
           uri: http://localhost:${server.port}
@@ -26,18 +50,9 @@ spring:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/(?<path>.*), /$\{path}/v3/api-docs
-        - id: sms-service
-          uri: lb://sms-service
-          predicates:
-            - Path=/sms/**
-          filters:
-            - RewritePath=/sms/(?<path>.*), /$\{path}
-        - id: statistics-service
-          uri: lb://statistics-service
-          predicates:
-            - Path=/statistics/**
-          filters:
-            - RewritePath=/statistics/(?<path>.*), /$\{path}
+###############################################################################
+
+
   #      routes:
   #        - id: get
   #          uri: http://httpbin.org:80

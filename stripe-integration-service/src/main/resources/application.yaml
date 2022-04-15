@@ -1,0 +1,11 @@
+server:
+  port: 8335
+  forward-headers-strategy: framework
+spring:
+  application:
+    name: stripe-integration-service
+stripe:
+  secret_key: sk_test_51KlygqJyIM88GoIruO6MaAoDX3McxAOzkP8U21Q9z8H52lAUE8gAfCLBE8ms6fhBJrfh635vKqEgdBcA3LbeTW4k00Y0MhxwsE
+  refresh_url: https://example.com/reauth
+  return_url: https://example.com/return
+

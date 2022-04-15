@@ -23,6 +23,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoField;
 import java.util.List;
 
 @Slf4j
@@ -89,12 +92,10 @@ public class InvoicePdfGenerator {
     private void fillPrice(Document document, Invoice invoice) {
         Table tablePrice = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tablePrice
-                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PRICE")
+                .addCell((new Cell(1,2).addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PRICE")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PRICE SUMMARY")
+                .addCell((new Cell(1,2).addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PRICE SUMMARY")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Total amount due")
                         .setFontColor(grayText)
@@ -117,11 +118,11 @@ public class InvoicePdfGenerator {
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("$25.00")
                         .setTextAlignment(TextAlignment.RIGHT)))).useAllAvailableWidth()
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder)))
+                .addCell((new Cell(3,1).addStyle(noBorder)))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder)))
+
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder)));
+                ;
 
         tablePrice.setBorderBottom(new SolidBorder(grayText, 0.01f, 0.5f));
 
@@ -172,19 +173,19 @@ public class InvoicePdfGenerator {
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Reference number")
                         .setFontColor(grayText).setFontSize(9))))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("MaxCorp"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("John Deer"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Maxim Golikov"))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("+7 918 777 77 77"))))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("MaxCorp")))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("John Deer")))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Maxim Golikov")))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("+7 918 777 77 77")))
                 .startNewRow()
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle")
-                        .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("VIN / Serial number")
-                        .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Unit number")
-                        .setFontColor(grayText).setFontSize(9))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle type")
-                        .setFontColor(grayText).setFontSize(9))))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle")
+                        .setFontColor(grayText).setFontSize(9)))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("VIN / Serial number")
+                        .setFontColor(grayText).setFontSize(9)))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Unit number")
+                        .setFontColor(grayText).setFontSize(9)))
+                .addCell(new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Vehicle type")
+                        .setFontColor(grayText).setFontSize(9)))
                 .startNewRow()
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("Mazzeratti"))))
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(10).add(new Paragraph("777777"))))
@@ -217,9 +218,7 @@ public class InvoicePdfGenerator {
         tableLaborAndService
                 .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("LABOR")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+//                .addCell((new Cell(1,3).addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9)
                         .add(new Paragraph("Tire repair / replacement"))))
@@ -232,15 +231,11 @@ public class InvoicePdfGenerator {
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9)
                         .add(new Paragraph("Hourly - 2 hour minimum")
                                 .setFontColor(grayText).setFontSize(10))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+                .addCell((new Cell(1,3).addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
                 .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("PARTS")
                         .setFontColor(greenText))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
-                .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
+//                .addCell((new Cell(1,3).addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(""))))
                 .startNewRow()
                 .addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph("Engine"))))
                 .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(9).add(new Paragraph(""))))
@@ -261,13 +256,22 @@ public class InvoicePdfGenerator {
     }
 
     private void fillComments(Document document, Invoice invoice) {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+        DateFormat date = new SimpleDateFormat("MMMM dd, YYYY  ");
+
+
+
         Table tableComments = new Table(UnitValue.createPercentArray(new float[]{20, 25, 25, 30}));
         tableComments
                 .addCell((new Cell().addStyle(noBorder).setFont(robotoBold).setFontSize(10).add(new Paragraph("COMMENTS").
                         setFontColor(greenText))));
         invoice.getComments().forEach(
-                s -> tableComments.startNewRow().addCell((new Cell().addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph(s))))
-                        .useAllAvailableWidth());
+                s -> tableComments.startNewRow()
+                        .addCell((new Cell(1,4).addStyle(noBorder).setFont(roboto).setFontSize(9).add(new Paragraph()
+                                .add(new Text(dateFormat.format(invoice.getCreated())+ " | "))
+                                .add(new Text(" "+date.format(invoice.getCreated())).setFontColor(grayText))
+                                .add(new Text(s).setFontColor(grayText))))));
+
         document.add(tableComments);
     }
 

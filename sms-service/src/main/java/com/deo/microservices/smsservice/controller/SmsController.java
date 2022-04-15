@@ -21,4 +21,17 @@ public class SmsController {
         twilioService.sendSms(text, number);
         return Mono.just("queued");
     }
+
+    @PostMapping("/call")
+    public Mono<String> call(@Validated @RequestParam String number) {
+        twilioService.twimlCall(number);
+        return Mono.just("queued");
+    }
+
+
+    @PostMapping("/callremote")
+    public Mono<String> callremote(@Validated @RequestParam String number) {
+        twilioService.prerecordedCall(number);
+        return Mono.just("queued");
+    }
 }
