@@ -1,5 +1,5 @@
 server:
-  port: 8765
+  port: 8000
 spring:
   cloud:
     gateway:
@@ -73,10 +73,15 @@ spring:
   #          filters:
   #            - RewritePath=/red(?<segment>/?.*), $\{segment}
   application:
-    name: api-gateway
+    name: api-gateway-service
   config:
     import: optional:configserver:http://localhost:8888
 eureka:
   client:
     service-url:
       defatul-zone: http://localhost:8761/eureka
+logging:
+  level:
+    root: INFO
+    org.springframework.security: TRACE
+
