@@ -15,8 +15,8 @@ public class SecurityConfig {
     public MapReactiveUserDetailsService userDetailsService() {
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         UserDetails user = User
-                .withUsername("user")
-                .password(encoder.encode("password"))
+                .withUsername("deo")
+                .password(encoder.encode("1234"))
                 .roles("USER")
                 .build();
         return new MapReactiveUserDetailsService(user);
