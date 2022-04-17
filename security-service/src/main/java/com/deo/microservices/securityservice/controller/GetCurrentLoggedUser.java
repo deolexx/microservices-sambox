@@ -1,4 +1,4 @@
-package com.deo.microservices.securityservice;
+package com.deo.microservices.securityservice.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;

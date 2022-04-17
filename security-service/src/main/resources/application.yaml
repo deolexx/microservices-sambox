@@ -3,13 +3,27 @@ server:
 spring:
   application:
     name: security-service
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://auth-server:9000/auth2/jwks
+  liquibase:
+    enabled: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    change-log: classpath:/db/migrations/db.changelog-master.yaml
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/security_db
+    username: test
+    password: test
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      #liqubase will handle all migrations
+      ddl-auto: none
+    defer-datasource-initialization: false
 logging:
   level:
     root: INFO
     org.springframework.security: TRACE
+    liquibase: INFO
 #      roles: USER

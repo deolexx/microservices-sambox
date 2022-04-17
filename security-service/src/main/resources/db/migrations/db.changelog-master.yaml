@@ -1,0 +1,14 @@
+databaseChangeLog:
+#  - logicalFilePath: /src/main/resouces/db/migration/db.changelog-master.yaml
+  - changeSet:
+      validCheckSum: ANY
+      id: V1_create_tables
+      author: s.lukianenko
+      preConditions:
+        - onFail: HALT
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            path: /db/migrations/changes/V1_create_tables.sql
+
