@@ -1,25 +1,17 @@
 package com.deo.microservices.apigateway.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-@EnableWebFluxSecurity
+//@EnableWebFluxSecurity
 public class SecurityConfig {
 
-    @Bean
-    public MapReactiveUserDetailsService userDetailsService() {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        UserDetails user = User
-                .withUsername("deo")
-                .password(encoder.encode("1234"))
-                .roles("USER")
-                .build();
-        return new MapReactiveUserDetailsService(user);
-    }
+//    @Bean
+//    public MapReactiveUserDetailsService userDetailsService() {
+//        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        UserDetails user = User
+//                .withUsername("deo")
+//                .password(encoder.encode("1234"))
+//                .roles("USER")
+//                .build();
+//        return new MapReactiveUserDetailsService(user);
+//    }
 
 }

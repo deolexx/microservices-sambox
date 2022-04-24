@@ -28,10 +28,15 @@ public class SmsController {
         return Mono.just("queued");
     }
 
-
     @PostMapping("/callremote")
     public Mono<String> callremote(@Validated @RequestParam String number) {
         twilioService.prerecordedCall(number);
+        return Mono.just("queued");
+    }
+
+    @PostMapping("/flow")
+    public Mono<String> flow(@Validated @RequestParam String number) {
+        twilioService.flowInit(number);
         return Mono.just("queued");
     }
 }

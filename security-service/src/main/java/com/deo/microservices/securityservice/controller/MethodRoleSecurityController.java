@@ -11,14 +11,28 @@ public class MethodRoleSecurityController {
 
     private final Service service;
 
-    @GetMapping("/ring")
-    public String whoIsTheBearer() {
-        return service.isBearer();
+    @GetMapping("/user")
+    public String userOnly() {
+        return service.onlyUser();
     }
 
-    @GetMapping("/hobbit")
-    public String isUserAHobbit() {
-        return service.isHobbit();
+    @GetMapping("/admin")
+    public String adminOnly() {
+        return service.onlyAdmin();
     }
 
+    @GetMapping("/both")
+    public String userAndAdmin() {
+        return service.userAndAdmin();
+    }
+
+    @GetMapping("/public")
+    public String publicEndpoint() {
+        return "This is public";
+    }
+
+    @GetMapping("/private")
+    public String privateEndpoint() {
+        return "This is private";
+    }
 }

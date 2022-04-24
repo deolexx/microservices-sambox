@@ -12,3 +12,5 @@ databaseChangeLog:
             encoding: utf8
             path: /db/migrations/changes/V1_create_tables.sql
 
+
+
