@@ -8,4 +8,7 @@ stripe:
   secret_key: sk_test_51KlygqJyIM88GoIruO6MaAoDX3McxAOzkP8U21Q9z8H52lAUE8gAfCLBE8ms6fhBJrfh635vKqEgdBcA3LbeTW4k00Y0MhxwsE
   refresh_url: https://example.com/reauth
   return_url: https://example.com/return
+  payment:
+    success: http://58be-109-108-234-198.ngrok.io/success
+    refresh: http://58be-109-108-234-198.ngrok.io/refresh
 

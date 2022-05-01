@@ -66,10 +66,12 @@ public class TwilioService {
 
     public void flowInit(String callNumber) {
         HashMap<String, Object> params = new HashMap<>();
-        params.put("text", "Hello darkness");
+        params.put("data", "testdata");
+
         Twilio.init(config.getAccountSid(), config.getAuthToken());
         Execution execution = Execution.creator("FWd984cd6ee6b88103560ca475a2bf9b0a", new PhoneNumber(callNumber),
                 new PhoneNumber(config.getPhoneNumber())).setParameters(params).create();
+
         log.info(execution.getStatus());
     }
 

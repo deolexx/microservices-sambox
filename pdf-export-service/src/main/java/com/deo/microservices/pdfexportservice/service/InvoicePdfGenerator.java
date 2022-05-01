@@ -42,8 +42,8 @@ public class InvoicePdfGenerator {
 
     private void createFontsAndColors() {
         try {
-//            noBorder = new Style().setBorder(new SolidBorder(new DeviceRgb(116, 123, 131), 0.01f, 0.5f));
-            noBorder = new Style().setBorder(Border.NO_BORDER);
+            noBorder = new Style().setBorder(new SolidBorder(new DeviceRgb(116, 123, 131), 0.01f, 0.5f));
+//            noBorder = new Style().setBorder(Border.NO_BORDER);
             greenText = new DeviceRgb(0, 204, 102);
             grayText = new DeviceRgb(116, 123, 131);
             futuraBold = PdfFontFactory.createFont("./pdf-export-service/src/main/resources/fonts/Futura Round Bold.ttf");

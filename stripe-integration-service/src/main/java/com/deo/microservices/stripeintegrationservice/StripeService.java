@@ -1,9 +1,14 @@
 package com.deo.microservices.stripeintegrationservice;
 
+import com.amazonaws.util.IOUtils;
 import com.stripe.Stripe;
+import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.*;
+import com.stripe.model.checkout.Session;
 import com.stripe.net.RequestOptions;
+import com.stripe.net.Webhook;
 import com.stripe.param.*;
+import com.stripe.param.checkout.SessionCreateParams;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +16,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Service
@@ -26,6 +33,12 @@ public class StripeService {
 
     @Value("${stripe.return_url}")
     private String returnUrl;
+
+    @Value("${stripe.payment.success}")
+    private String successPaymentUrl;
+
+    @Value("${stripe.payment.refresh}")
+    private String refreshPaymentUrl;
 
     @PostConstruct
     public void init() {
@@ -133,4 +146,75 @@ public class StripeService {
         return transfer.toJson();
     }
 
+    @SneakyThrows
+    public String createPaymentIntent(Long amount) {
+        PaymentIntentCreateParams params =
+                PaymentIntentCreateParams.builder()
+                        .setAmount(Math.multiplyExact(100, amount))
+                        .setCurrency("USD")
+                        .addPaymentMethodType("card")
+                        .putMetadata("test metadata", "test metadata value")
+                        .build();
+
+        // Create a PaymentIntent with the order amount and currency
+        PaymentIntent paymentIntent = PaymentIntent.create(params);
+        return paymentIntent.getClientSecret() + " : " + paymentIntent.getId();
+    }
+
+    @SneakyThrows
+    public String paymentIntents(final String paymentIntentId) {
+        return PaymentIntent.retrieve(paymentIntentId).toJson();
+    }
+
+    @SneakyThrows
+    public Session createCheckoutSession() {
+
+        SessionCreateParams params =
+                SessionCreateParams.builder()
+                        .setMode(SessionCreateParams.Mode.PAYMENT)
+                        .setSuccessUrl(successPaymentUrl)
+                        .setCancelUrl(refreshPaymentUrl)
+                        .addLineItem(
+                                SessionCreateParams.LineItem.builder()
+                                        .setQuantity(1L)
+                                        .setPriceData(
+                                                SessionCreateParams.LineItem.PriceData.builder()
+                                                        .setCurrency("usd")
+                                                        .setUnitAmount(6666L)
+                                                        .setProductData(
+                                                                SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                                                                        .setName("test product data")
+                                                                        .build())
+                                                        .build())
+                                        .build())
+                        .build();
+
+        Session session = Session.create(params);
+        return session;
+    }
+
+    @SneakyThrows
+    public void handleWebhook(HttpServletRequest request, HttpServletResponse response) {
+        String webHookSecret = "whsec_wCwu0hkFUr3q2mhwquh1ZrA7aSL4AJCs";
+        String sigHeader = request.getHeader("Stripe-Signature");
+
+        String payload = IOUtils.toString(request.getInputStream());
+        if (webHookSecret != null && sigHeader != null) {
+            // Only verify the event if you have an endpoint secret defined.
+            // Otherwise use the basic event deserialized with GSON.
+            try {
+                Event event = Webhook.constructEvent(
+                        payload, sigHeader, webHookSecret
+                );
+                log.warn(event.getData().toJson());
+                log.error(event.getType());
+            } catch (SignatureVerificationException e) {
+                // Invalid signature
+                System.out.println("⚠️  Webhook error while validating signature.");
+                response.setStatus(400);
+
+            }
+
+        }
+    }
 }

@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 8005
   forward-headers-strategy: framework
 spring:
   application:

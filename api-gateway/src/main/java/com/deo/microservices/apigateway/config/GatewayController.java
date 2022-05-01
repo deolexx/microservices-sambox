@@ -1,5 +1,6 @@
 package com.deo.microservices.apigateway.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +9,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
+@Slf4j
 @RestController
 public class GatewayController {
 
@@ -28,4 +30,15 @@ public class GatewayController {
         return response.setComplete();
     }
 
+    @GetMapping("/success")
+    String succes() {
+        log.warn("SUCCESS CALLED");
+        return "success";
+    }
+
+    @GetMapping("/refresh")
+    String refresh() {
+        log.warn("REFRESH CALLED");
+        return "refresh";
+    }
 }

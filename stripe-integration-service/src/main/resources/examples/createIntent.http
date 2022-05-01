@@ -1,0 +1,1 @@
+GET {{host}}/intent-create?amount=45
