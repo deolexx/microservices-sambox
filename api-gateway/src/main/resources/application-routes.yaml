@@ -33,6 +33,7 @@ spring:
             - Path=/stripe-integration/**
           filters:
             - RewritePath=/stripe-integration/(?<path>.*), /$\{path}
+            - AddResponseHeader=Access-Control-Allow-Origin, *
         #         STATISTICS
         - id: statistics-service
           uri: lb://statistics-service
