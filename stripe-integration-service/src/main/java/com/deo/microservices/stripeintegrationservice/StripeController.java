@@ -3,6 +3,7 @@ package com.deo.microservices.stripeintegrationservice;
 import com.amazonaws.util.IOUtils;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
+import com.stripe.model.PaymentIntent;
 import com.stripe.net.Webhook;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,11 +61,6 @@ public class StripeController {
         return ResponseEntity.ok(service.transferFunds(accountId, amount));
     }
 
-    @GetMapping("/checkoutsession")
-    public ResponseEntity<String> checkOutSession() {
-        return ResponseEntity.ok(service.createCheckoutSession().toJson());
-    }
-
     @GetMapping("/intent-create")
     public ResponseEntity<String> createPayment(@RequestParam Long amount) {
         return ResponseEntity.ok(service.createPaymentIntent(amount));
@@ -78,6 +74,11 @@ public class StripeController {
     @PostMapping("/webhook")
     public void receiveWebhook(HttpServletRequest request, HttpServletResponse response) throws IOException {
         service.handleWebhook(request, response);
+    }
+
+    @GetMapping("/secret")
+    public String getIntent(@RequestParam Long amount) {
+        return service.createIntent(amount);
     }
 
 }

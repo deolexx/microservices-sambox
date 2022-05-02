@@ -147,6 +147,20 @@ public class StripeService {
     }
 
     @SneakyThrows
+    public String createIntent(Long amount) {
+        PaymentIntentCreateParams params =
+                PaymentIntentCreateParams.builder()
+                        .setAmount(Math.multiplyExact(100, amount))
+                        .setCurrency("USD")
+                        .addPaymentMethodType("card")
+                        .putMetadata("test metadata", "test metadata value")
+                        .build();
+
+        // Create a PaymentIntent with the order amount and currency
+        return PaymentIntent.create(params).toJson();
+    }
+
+    @SneakyThrows
     public String createPaymentIntent(Long amount) {
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
@@ -164,33 +178,6 @@ public class StripeService {
     @SneakyThrows
     public String paymentIntents(final String paymentIntentId) {
         return PaymentIntent.retrieve(paymentIntentId).toJson();
-    }
-
-    @SneakyThrows
-    public Session createCheckoutSession() {
-
-        SessionCreateParams params =
-                SessionCreateParams.builder()
-                        .setMode(SessionCreateParams.Mode.PAYMENT)
-                        .setSuccessUrl(successPaymentUrl)
-                        .setCancelUrl(refreshPaymentUrl)
-                        .addLineItem(
-                                SessionCreateParams.LineItem.builder()
-                                        .setQuantity(1L)
-                                        .setPriceData(
-                                                SessionCreateParams.LineItem.PriceData.builder()
-                                                        .setCurrency("usd")
-                                                        .setUnitAmount(6666L)
-                                                        .setProductData(
-                                                                SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                                        .setName("test product data")
-                                                                        .build())
-                                                        .build())
-                                        .build())
-                        .build();
-
-        Session session = Session.create(params);
-        return session;
     }
 
     @SneakyThrows
