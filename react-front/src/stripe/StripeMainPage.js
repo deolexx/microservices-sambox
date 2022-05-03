@@ -4,7 +4,7 @@ import {useState} from "react";
 import {StripeForm} from "./StripeForm";
 
 
-export default function Home() {
+export default function StripeMainPage() {
 
     const [clientSecret, setClientSecret] = useState('');
 

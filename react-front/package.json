@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.0.0-rc.0",
+    "@emotion/styled": "^11.0.0-rc.0",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/material": "^5.6.4",
     "@stripe/react-stripe-js": "^1.7.2",
     "@stripe/stripe-js": "^1.29.0",
+    "@types/react": "^18.0.8",
     "axios": "^0.27.2",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "4.0.3"
   },
   "scripts": {
