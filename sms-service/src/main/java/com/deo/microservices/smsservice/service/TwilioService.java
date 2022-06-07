@@ -24,11 +24,22 @@ public class TwilioService {
     private final String fileUri = "https://microservices-sandbox-2316.twil.io/welcome";
     private final TwilioConfig config;
 
+//    public void sendSms(String messageText, String messageNumber) {
+//        Twilio.init(config.getAccountSid(), config.getAuthToken());
+//        Message message = Message.creator(
+//                        new PhoneNumber(messageNumber),
+//                        "MG3e8b5225af02740148f4504591ee1a58",
+//                        messageText
+//                )
+//                .create();
+//        log.info(message.getStatus());
+//    }
+
     public void sendSms(String messageText, String messageNumber) {
         Twilio.init(config.getAccountSid(), config.getAuthToken());
         Message message = Message.creator(
                         new PhoneNumber(messageNumber),
-                        "MG3e8b5225af02740148f4504591ee1a58",
+                        new PhoneNumber(config.getPhoneNumber()),
                         messageText
                 )
                 .create();
@@ -66,10 +77,10 @@ public class TwilioService {
 
     public void flowInit(String callNumber) {
         HashMap<String, Object> params = new HashMap<>();
-        params.put("data", "testdata");
+        params.put("jobId", 5);
 
         Twilio.init(config.getAccountSid(), config.getAuthToken());
-        Execution execution = Execution.creator("FWd984cd6ee6b88103560ca475a2bf9b0a", new PhoneNumber(callNumber),
+        Execution execution = Execution.creator("FW00a3f41a88d704a2ecf89036613c309b", new PhoneNumber(callNumber),
                 new PhoneNumber(config.getPhoneNumber())).setParameters(params).create();
 
         log.info(execution.getStatus());

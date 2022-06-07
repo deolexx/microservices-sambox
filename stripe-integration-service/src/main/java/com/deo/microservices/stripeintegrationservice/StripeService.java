@@ -140,6 +140,7 @@ public class StripeService {
                         .setAmount(amount)
                         .setCurrency("usd")
                         .setDestination(accountId)
+                        .setSourceType(TransferCreateParams.SourceType.CARD)
                         .build();
 
         Transfer transfer = Transfer.create(params);
